@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+
+#cont{
+	position: relative;
+	background: pink;
+}
+
+#left,#right{	
+	border: 8px solid #eee;
+	width: 300px;
+	height: 300px;	
+	background: rgb(218,233,203);
+	position: absolute;
+	top: 30px;
+	font-family:"微软雅黑";
+	font-size: 18px;
+    line-height: 30px;
+	
+}
+#left{
+	left: 20px;
+	color: red;
+}
+#right{
+overflow: auto;
+color: green;
+left: 520px;
+
+}
+#but{
+width: 80px;
+height: 50px;
+background: rgb(208,253,243);
+position: absolute;
+top:40px;
+left:390px;
+font-weight: bold;
+line-height: 50px;
+}
+span{
+	position: absolute;	
+	font-size: 20px;
+	top: 100px;
+	left: 330px;
+	text-align: center;
+    width: 200px;
+}
+ul{  
+	margin: 0px;
+	padding: 0px;
+	width: 144px;
+	height: 20px;
+	position: absolute;
+	left: 360px;
+	top: 140px;
+}
+li{
+	list-style: none;
+	float: left;
+    border:1px solid black;
+    margin-right: 1px;
+	width: 15px;
+	height: 20px;
+background: pink;
+
+}
+	</style>
+</head>
+<body>
+	<div id="cont">
+	<textarea id="left">当主持人指出，2016年大选教会人们要预料意料之外的事情。希拉里引用谚语回答道，“被骗一次，其错在人；被骗两次，其错在己。我想美国人已经见识到当一个电视真人秀候选人胜选之后会发生什么。”并且希拉里还表示，民主党将很有机会赢得众议院多数席位，而这将会是美国摆脱特朗普家族控制，走上正轨的开端。</textarea> 
+ <input id="but" type="button" value="把文字右移">
+ <span>0/0</span>
+ <ul id="ul1">
+ 	<li></li>
+ 	<li></li>
+ 	<li></li>
+ 	<li></li>
+ 	<li></li>
+ 	<li></li>
+ 	<li></li>
+ 	<li></li>
+ </ul>
+
+    <div id="right"></div>
+
+
+	</div>
+<script>
+var text=document.getElementById('left');
+var oBut=document.getElementById('but');
+var oDiv=document.getElementById("right");
+var oSpan=document.getElementsByTagName("span")[0];
+var timer=null;
+var aLi=document.getElementsByTagName("li");
+var arr=[];
+//var str=text.value  定义在刚开始的地方它的值会一直是初始值，不会跟随事件的进行从而被改变，这是错误的。
+var onoff=true;
+
+oBut.onclick=function(){
+if (onoff) {
+var num=0;
+var str=text.value;//定义在点击函数内部是为了及时更新text.value。
+if (str!="") {
+arr=str.split("");
+
+timer=setInterval(
+function(){
+	onoff=false;
+aLi[num%aLi.length].style.background="pink";
+setTimeout(function(){aLi[num%aLi.length].style.background="rgb(208,223,254)";},0);
+oSpan.innerHTML=(num+1)+"/"+arr.length;
+str=str.split(arr[num]).join('');
+text.value=str;
+oDiv.innerHTML+=arr[num];
+num++;
+if (num==arr.length) {
+	clearInterval(timer);
+setTimeout(function(){for(var i=0;i<aLi.length;i++)
+	{	aLi[i].style.background="pink";}},120)	
+onoff=true;
+}
+}
+	,120)
+}
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+ul{
+	margin: 0px;
+	padding: 0px;
+}
+li{
+	list-style: none;
+}
+#box{	
+	width: 500px;
+}	
+.li{
+	height: 50px;
+}
+.font1{
+	line-height: 50px;
+	margin-right: 60px;
+}
+.a{
+	text-decoration: none;
+	color: red;
+	margin-right: 10px;
+}
+hr{
+	margin:0px;
+	padding: 0px;
+}
+#show{
+  margin-top: 4px;
+}
+.sli{ 
+	width: 140px;
+	position: relative;
+	height: 50px;
+	margin-right: 10px;
+	border: 1px solid black;
+	float: left;
+}
+.span{
+	font-size: 18px;
+	position: absolute;
+	line-height: 50px;
+	left: 6px;
+
+}
+.sa1{
+	position: absolute;
+	text-decoration: none;
+	color: red;
+	font-size: 18px;
+	line-height: 50px;
+	left: 52px;
+}
+.sa2{
+	position: absolute;
+	text-decoration: none;
+	color: red;
+	font-size: 24px;
+	top: -10px;
+	right: 5px;
+}
+
+
+</style>
+<body>
+	<ul id="box">
+		<li class="li" id="money"> 
+     <span class="font1">
+     	价格：
+     </span>
+    <a class="a" href="javascript:;">0-199</a>
+    <a class="a" href="javascript:;">200-399</a>
+    <a class="a" href="javascript:;">400-599</a>
+    <a class="a" href="javascript:;">600-799</a>
+    <a class="a" href="javascript:;">800以上</a>
+		</li>
+    <hr>
+		<li class="li" id="choose"> 
+     <span class="font1">
+     	类别：
+     </span>
+    <a class="a" href="javascript:;">单肩包</a>
+    <a class="a" href="javascript:;">手提包</a>
+    <a class="a" href="javascript:;">双肩包</a>
+    <a class="a" href="javascript:;">手拿包</a>
+    <a class="a" href="javascript:;">斜挎包</a>
+		</li>
+    <hr>
+        <li class="li" id="logo"> 
+     <span class="font1">
+     	品牌:
+
+     </span>
+    <a class="a" href="javascript:;">ONLY</a>
+    <a class="a" href="javascript:;">艾格</a>
+    <a class="a" href="javascript:;">稻草人</a>
+    <a class="a" href="javascript:;">宝姿</a>
+    <a class="a" href="javascript:;">迪奥</a>
+    <a class="a" href="javascript:;">ELLE</a>
+		</li>
+
+    <hr>
+
+	</ul>
+	<ul id="show">
+	
+	</ul>
+</body>
+
+<script>
+//var Ba=document.getElementsByClassName('a');
+
+var li1=document.getElementById("money");
+var a1=li1.getElementsByClassName('a');
+var li2=document.getElementById("choose");
+var a2=li2.getElementsByClassName('a');
+var li3=document.getElementById("logo");
+var a3=li3.getElementsByClassName('a');
+
+
+function fn (a1,li1,infor,onoff){
+var show=document.getElementById("show");//每次调用函数时就能更新show的子节点。
+for(var i=0;i<a1.length;i++)
+
+{   a1[i].index=i;
+
+  a1[i].onclick=function(){
+  //	alert(show.children.length);
+  	if (onoff) {//开关使在已经点击一行中的某个元素过后就不能再点击这一行中的其他元素了！
+  	onoff=false;
+var str=this.innerHTML;
+var num=this.index;
+var that=this.cloneNode(true);
+  li1.removeChild(this);
+ var li=document.createElement("li");
+ li.innerHTML='<span class="span">'+infor+'</span>'+'<a class="sa1" href="javascript:;">'+str+'</a>'+'<a class="sa2" href="javascript:;">x</a>';
+li.className="sli";
+if (li1==li2) {
+show.insertBefore(li,show.lastElementChild);
+}
+else if (li1==li3) {
+	show.appendChild(li);
+}
+else{
+	show.insertBefore(li,show.firstElementChild);
+}
+
+var oa=li.lastElementChild;
+oa.onclick=function(){
+show.removeChild(this.parentNode);
+li1.insertBefore(that,a1[num]);
+onoff=true;//元素返回后开关重新开启。
+fn(a1,li1,infor,onoff);//让克隆的元素重新恢复了事件！
+}
+}
+}
+}
+}
+
+
+
+fn(a1,li1,"价格",true);
+fn(a2,li2,"类别",true);
+fn(a3,li3,"品牌",true);
+
+
+
+</script>
+</html>

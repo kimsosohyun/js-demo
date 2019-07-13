@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+   <!-- 2018/4/1 -->
+<style>
+#cont{
+width:800px;
+height: 500px; 
+border: 3px solid #ddd;
+background: rgb(212,236,278);
+border-radius: 10px;
+margin: 0 auto;
+}	
+img{
+width: 160px;
+height: 160px;
+margin: 0 auto;
+display: block;
+}	
+#but1,#but2{
+position: relative;
+border-radius: 5px;
+top: 20px;
+width: 100px;
+height: 40px;
+font-size: 20px;
+font-family: "黑体";
+background: rgb(201,254,236);
+border:1px solid black;
+}
+#but1{
+left: 280px;
+
+}
+#but2{
+left: 290px;
+}
+#main{
+margin: 0px;
+padding: 0px;
+width: 750px;
+height: 400px;
+position: relative;
+left: 25px;
+top: 30px;
+}
+#main li{
+list-style: none;
+float: left;
+width: 180px;
+margin-left: 5px;
+margin-top: 12px;
+}
+#main span{
+width:160px;
+height: 20px;
+background: red;
+display: block;
+margin: 0 auto;
+text-align: center;
+font-size: 16px;
+font-family: "微软雅黑";
+background: rgb(201,269,333);
+color: green;
+}
+
+
+
+</style>
+</head>
+<body>
+	<div id="cont">
+		
+<input id="but1" type="button" value="从大到小">
+
+<input id="but2" type="button" value="随机排序">
+
+<ul id="main">
+	
+<li><img src="./newimg/1.jpg" alt="">
+<span>1-图片一</span>
+</li>
+
+<li><img src="./newimg/2.jpg" alt="">
+<span>2-图片二</span>
+</li>
+
+<li><img src="./newimg/3.jpg" alt="">
+<span>3-图片三</span>
+</li>
+
+<li><img src="./newimg/4.jpg" alt="">
+<span>4-图片四</span>
+</li>
+
+<li><img src="./newimg/5.jpg" alt="">
+<span>5-图片五</span>
+</li>
+
+<li><img src="./newimg/6.jpg" alt="">
+<span>6-图片六</span>
+</li>
+
+<li><img src="./newimg/7.jpg" alt="">
+<span>7-图片七</span>
+</li>
+
+<li><img src="./newimg/8.jpg" alt="">
+<span>8-图片八</span>
+</li>
+
+</ul>
+
+
+	</div>
+</body>
+
+
+<script>
+	var oBut1=document.getElementsByTagName('input')[0];
+	var oBut2=document.getElementsByTagName('input')[1];
+	var aLi=document.getElementsByTagName('li');
+	var aImg=document.getElementsByTagName('img');
+	var aSpan=document.getElementsByTagName('span');
+    var arr=[];
+    var arrtex=[];
+    var onoff=true;
+
+
+for(var i=1;i<aLi.length+1;i++)
+	{
+   arr.push(i);
+   arrtex.push(aSpan[i-1].innerHTML);
+	}
+
+
+oBut1.onclick=function(){
+if (onoff) {
+
+arr.sort(function(a,b){
+
+return a-b;
+
+})
+
+arrtex.sort(function(a,b){
+
+return parseInt(a)-parseInt(b);
+
+})
+
+onoff=false;
+oBut1.value="从小到大";
+arr.reverse();
+arrtex.reverse();
+for(var i=0;i<aLi.length;i++)
+{
+	aImg[i].src="./newimg/"+arr[i]+".jpg";
+	aSpan[i].innerHTML=arrtex[i];
+}
+
+}
+
+
+else{
+oBut1.value="从大到小";
+onoff=true;
+
+arr.sort(function(a,b){
+
+return a-b;
+
+})
+
+arrtex.sort(function(a,b){
+
+return parseInt(a)-parseInt(b);
+
+})
+
+for(var i=0;i<aLi.length;i++)
+{
+	aImg[i].src="./newimg/"+arr[i]+".jpg";
+	aSpan[i].innerHTML=arrtex[i];
+}
+}
+}
+
+oBut2.onclick=function(){
+
+arr.sort(function(a,b){
+
+return Math.random()-0.5;
+
+})
+
+arrtex.sort(function(a,b){
+
+return Math.random()-0.5;
+
+})
+
+for(var i=0;i<aLi.length;i++)
+{
+	aImg[i].src="./newimg/"+arr[i]+".jpg";
+	aSpan[i].innerHTML=arrtex[i];
+}
+
+}
+</script>
+</html>

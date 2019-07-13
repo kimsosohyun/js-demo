@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	#cont{
+		width: 500px;
+		height: 500px;
+		position: relative;
+	}	
+li{
+	list-style: none;
+}
+ul{
+	padding:0px;
+	margin:0px;
+}
+h1{
+   width: 80px;
+   height: 50px;
+   position: absolute;
+   font-size: 20px;
+   line-height: 50px;
+   text-align: center;
+   border: 2px solid #ddd;
+   padding: 0px;
+   margin: 0px;
+
+}
+#rig{
+   left: 86px;
+}
+#img1{
+	position: absolute;
+	top:52px; 
+	width: 300px;
+	height: 300px;
+	border: 2px solid #ddd;
+}
+li{
+	position: relative;
+	left: 306px;
+	top: 54px;
+	width: 80px;
+	height: 50px;
+	margin-bottom: 5px;
+	border: 2px solid #ddd;
+	text-align: center;
+    line-height: 50px;
+}
+
+
+	</style>
+</head>
+
+<body>
+	<div id="cont">
+		<h1 id="lef">菜单1</h1>
+		<h1 id="rig">菜单2</h1>
+		<img id="img1" src="" alt="">
+		<ul></ul>
+	</div>
+
+
+	<script>
+		var oUl=document.getElementsByTagName('ul')[0];
+         var oImg=document.getElementById("img1");
+          var aH=document.getElementsByTagName("h1");
+         var timer=null;
+         var aLi=null;
+         var num=0;
+       var arrimg1=['./images/1.jpg','./images/2.jpg','./images/3.jpg','./images/4.jpg'];
+       var arrtex1=['越来','月榜','？？','！！'];
+        var arrimg2=['./images/6.jpg','./images/7.jpg','./images/8.jpg','./images/9.jpg','./images/11.jpg'];
+        var arrtex2=['上杉','绘梨衣','小怪兽','啊','？？'];
+
+
+function fn1(arrimg,arrtex){
+	oUl.innerHTML="";
+for( var i=0;i<arrimg.length;i++){
+       oUl.innerHTML+="<li></li>";
+}
+aLi=oUl.getElementsByTagName("li");
+for(j=0;j<arrimg.length;j++)
+{
+	aLi[j].innerHTML=arrtex[j];
+}
+aLi[num].style.background="rgb(225,221,223)";
+oImg.src=arrimg[num];
+ timer=setInterval(function(){
+ 	for(s=0;s<arrimg.length;s++)
+ 	{
+ 		aLi[s].style.background="white";
+ 	}
+
+	aLi[num+1].style.background="rgb(225,221,223)";
+	oImg.src=arrimg[num+1];
+	num++;
+		if(num==arrtex.length-1)
+{
+	clearInterval(timer);
+	num=0;
+}
+},1000);
+	}
+
+
+function fnt(){
+	for(var i=0;i<aH.length;i++)
+{
+	aH[i].style.background="white";
+}
+aH[0].style.background="orange";
+	fn1(arrimg1,arrtex1);
+setTimeout(function(){
+		for(var i=0;i<aH.length;i++)
+{
+	aH[i].style.background="white";
+}
+	aH[1].style.background="orange";
+	fn1(arrimg2,arrtex2)},(arrtex1.length)*1000);
+}
+
+
+fnt();
+  setInterval(
+    fnt
+,(arrtex1.length+arrtex2.length)*1000);
+
+
+	</script>
+
+</body>
+</html>

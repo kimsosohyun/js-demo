@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+ul{
+	margin: 0px;
+	padding: 0px;
+}		
+li{
+	list-style: none;
+	
+}
+#bg{
+	width: 600px;
+	height: 500px;
+	position: absolute;
+}
+#box{
+	width: 600px;
+	position: relative;
+	height: 500px;
+	}
+#show{
+	width: 420px;
+	max-height: 300px;	
+	background:#eee;
+	opacity: 0.5;
+  position: relative;
+	top:60px;
+	left: 96px;
+	overflow: auto;
+}
+.active{
+  width: 400px;
+  height: 50px;
+  font-size: 18px;
+  font-family: "黑体";
+  line-height: 50px;
+  margin-bottom: 10px;
+}
+.li{
+	position: relative;
+    width: 400px;
+    height: 50px;
+    background: rgb(202,284,276);
+    font-size: 18px;
+    font-family: "黑体";
+    line-height: 50px;
+    margin-bottom: 10px;
+}
+.a{	
+	position: absolute;	
+    opacity: 0;
+	right: 0px;
+	width: 50px;
+	height: 50px;
+	text-decoration: none;
+	color: red;
+}
+#but{
+	border-radius: 5px;
+	position: relative;
+	font-size: 14px;
+	font-weight: bold;
+	letter-spacing: 6px;
+	background: rgb(221,204,236);
+	top:66px;
+	left: 420px;
+	width: 80px;
+	height: 30px;	
+}
+#input{
+	width:400px;
+	height: 30px;
+    background: #eee;
+    position: relative;
+    opacity: 0.5;
+    top:70px;
+    line-height: 30px;
+    left: 100px;
+    display: block; 
+    font-size: 18px;
+    font-family: "黑体";
+    border-radius: 12px;
+    outline: none;
+}
+	</style>
+
+
+</head>
+<body>
+	 <div id="box">
+	 	<img id="bg" src="./img/bg.jpg" alt="">
+	 	  <ul id="show">
+	 	<li class="active">请输入内容</li>
+    <li class="active"></li>
+   
+	 	  </ul>
+	 	  <input id="but" type="button" value="发送">
+	 	  <input id="input" type="text">
+  
+	 </div> 
+</body>
+
+<script>
+	
+var show=document.getElementById('show');
+var btn=document.getElementById('but');
+var input=document.getElementById('input');
+var num=0;
+var ali=document.getElementsByTagName('li');
+
+input.focus();
+input.onkeyup=function(ev){
+ev=ev||event;
+if (ev.keyCode==13) {
+  submite();
+  remove();
+}
+}
+
+
+ btn.onclick=function(){
+  submite();
+   remove();
+ }
+
+
+function submite(){
+var li1=show.children[0];
+var li2=show.children[1];
+
+var str=input.value;
+if (str) {
+	//if (num==0) {
+	//	li1.innerHTML="";
+	//}
+num++;
+if (num==1&&li1) {//num=1且删除过后还剩下li1，如果不剩下了，则直接添加一个新的Li.
+
+li1.innerHTML='<span class="span">'+num+'</span>'+"."+str+'<a class="a" href="javascript:;">删除</a>';
+li1.className="li";
+input.value="";
+}
+else if (num==2&&li2) {
+
+li2.innerHTML='<span class="span">'+num+'</span>'+"."+str+'<a class="a" href="javascript:;">删除</a>';
+li2.className="li";
+input.value="";
+}
+else{
+var li=document.createElement("li") ;
+li.innerHTML='<span class="span">'+num+'</span>'+"."+str+'<a class="a" href="javascript:;">删除</a>';
+li.className="li";
+show.appendChild(li);
+input.value="";
+}
+}	
+else{
+	alert("请你输入内容哦")
+}
+}
+
+
+
+function remove(){
+for(var i=0;i<ali.length;i++)
+{    ali[i].index=i;
+  ali[i].onmouseover=function(){
+   if (this.lastElementChild) {
+    this.lastElementChild.style.opacity="1";
+     var oA=this.lastElementChild;
+  //  console.log(oA.previousElementSibling);
+  //  var kim=this.index+1;//这个var害苦了我啊！不随着点击事件改变的参数一定不要对他做文章了！！！用他来结合num作判断真的是sb，出现的各种bug烦的一批！
+   oA.onclick=function(){
+    var aspan=document.getElementsByClassName("span");//每次点击就更新一次aspan的排序参数。
+     //  alert(kim);
+      // alert(num);
+       if (this.parentNode.nextElementSibling&&this.parentNode.nextElementSibling.firstElementChild) {
+       
+          var kim= this.parentNode.nextElementSibling.firstElementChild.innerHTML;
+      while(kim!=num+1)
+      {
+        aspan[kim-1].innerHTML=kim-1;//改变在删除之前,这是最好的方式，希望一定要记住！
+        kim++;
+
+      }          
+    }
+        show.removeChild(this.parentNode);       
+    //   if (num>kim) {
+     //   while(kim!=num){           
+      //  aspan[kim-1].innerHTML=kim;
+      //  kim++;
+     //  }
+     //  }
+     // else{
+      //  alert(this.parentNode.nextElementSibling.firstElementChild.innerHTML)
+    //  if (aspan[kim-2]) {
+    //    aspan[kim-2].innerHTML=kim-1;
+    //  }
+     
+     // console.log(this.parentNode.firstElementChild.innerHTML);
+       // this.nextElementSibling.innerHTML=this.nextElementSibling.innerHTML-1;
+     // }
+
+      num--;
+          
+           if (num==0) {
+          show.innerHTML="";
+     var li1=document.createElement("li") ;
+     var li2=document.createElement("li") ;
+     li1.innerHTML="请输入内容";
+      li1.className="active";
+      li2.className="active";
+      show.appendChild(li1);//先添加li1，确保“请输入内容在框的最上方”
+      show.appendChild(li2);     
+  }
+}
+ 
+     this.style.background="yellow";
+  }
+}
+
+  ali[i].onmouseout=function(){
+    if (this.lastElementChild) {
+     this.lastElementChild.style.opacity="0";
+     this.style.background="rgb(202,284,276)";
+  }
+}
+}
+
+}
+
+</script>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+<!--  初学js学到字符串的查找（String.indexof）和字符串的替换（妙用split和join）学做的一个查找和替换的小demo  2018/3/19-->
+</head>
+<style>
+ul{
+  padding: 0px;
+  margin: 0px;
+}
+li{
+	list-style: none;
+}
+#left{
+	float: left;
+width: 500px;
+height: 500px;
+position: relative;
+border:2px solid black;
+background: rgb(201,224,274);
+	}
+#p{
+  margin: 5px;
+  border-radius: 15px;
+padding: 5px;
+font-size: 18px;
+background: rgb(205,254,267);
+	}
+
+#rig{
+	float: left;
+	
+}
+#rig #active{
+	display: block;
+}
+#rig li{
+	color: red;
+	background: rgb(201,268,222);
+    width:60px;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 4px;
+	height: 40px;
+    cursor:pointer;
+    display: none; 
+}
+#foot{
+	position: relative;
+	top: 30px;
+	left: 30px;
+	background: pink;
+	width: 400px;
+	height: 180px;
+	display: none;
+}
+#cont {
+	width: 500px;
+	height: 30px;
+	position: absolute;
+	top: 20px;
+}
+#cont li{
+	line-height: 30px;
+	width: 80px;
+	color: red;
+	position: absolute;	
+	 text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    cursor:pointer;
+    background: rgb(201,268,222);
+}
+#li1{
+	left: 60px;
+
+}
+#li2{
+	left: 150px;
+}
+#search{
+border-radius: 10px;
+width: 370px;
+height: 70px;
+position: absolute;
+top: 60px;
+left: 20px;
+background: yellow;
+display: none;
+z-index: 1;
+}
+#text1,#text2,#text3{
+	width: 200px;
+	height: 26px;
+	position: relative;
+	 left: 30px;
+}
+#text1{
+    top: 20px;
+}
+#text2{
+	top: 2px;
+}
+#text3{
+	top: 4px;
+}
+#but1,#but2,#but3{
+	width: 50px;
+	height: 30px;
+	position: relative;
+	left: 30px;
+}
+#but1{
+	top: 20px;
+}
+#but2{
+  top: 2px;
+}
+#but3{
+  top: 4px;
+}
+
+#change{
+border-radius: 10px;
+width: 370px;
+height: 70px;
+position: absolute;
+top: 60px;
+left: 20px;
+background: yellow;
+display: none;
+z-index: 1;
+}
+
+#x{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+#this{
+	background: rgb(251,266,288);
+	color: red;
+}
+#out{
+	position: absolute;
+	display: none;
+	z-index: 2;	
+	top: -20px;
+	left: 80px;
+	width: 220px;
+	height: 220px;
+	background: rgb(202,249,118);
+	opacity: 0.6;
+}
+#out span{
+	font-size: 18px;
+}
+#p1{
+	margin: 0px;
+	padding:0px;
+	color: red;
+	font-size: 15px;
+	width: 220px;
+	height: 170px;
+	overflow: auto;
+}
+#but4,#but5{
+position: relative;
+top: 10px;
+width: 50px;
+height: 20px;
+}
+#but4{
+	left: 20px;
+}
+#but5{
+	left: 90px;
+}
+</style>
+
+<body>
+<div id="left">
+<p id="p">李嘉诚解释为什么不出,他表示:第一,我说真话时,会得罪很多朋友的.说假话，我为什么要出,李嘉诚表示,现在选择一条路,继续做基金会.基金会的收入有制度的,无论今天也好,将来李泽钜和李泽楷先生都有,他们都分了工,也会有制度,不能花超过多少,也不能花少于多少.李嘉诚:大学还没毕业女朋友就要房,这是不对的.李嘉诚表示,自己父亲是做小学的校长,当时待遇不差,自己可以受到很好的教育.结果因为战争,来到香港,我12岁就要工作,我还没有14岁,他就暴富.</p>
+
+<div id="foot">
+	<ul id="cont">
+		<li id="li1">查找</li>
+		<li id="li2">替换</li>
+	</ul>
+	<div id="search">
+	<input id="text1" type="text">
+	<input id="but1" type="button" value="查找">
+     </div>
+
+     <div id="change">
+	<input id="text2" type="text">
+	<input id="but2" type="button" value="查找">
+	<input id="text3" type="text">
+	<input id="but3" type="button" value="替换">
+     </div>
+
+     <div id="out">
+     	<span>确认删除此段落吗？</span>
+     	<p id="p1"></p>
+     	<input id="but4" type="button" value="确认">
+     	<input id="but5" type="button" value="取消">
+
+     </div>
+
+     <input id="x" type="button" value="x">
+
+</div>
+
+</div>
+<ul id="rig">
+	<li id="active">展开</li>
+	<li>查找</li>
+	<li>替换</li>
+</ul>
+
+<script>
+var oUl1=document.getElementById('rig');
+var aLi1=oUl1.getElementsByTagName('li');
+var aP=document.getElementsByTagName('p')[0];
+var aDiv=document.getElementById('foot');
+var aDiv1=document.getElementById('search');
+var aDiv2=document.getElementById('change');
+var Li1=document.getElementById('li1');
+var Li2=document.getElementById('li2');
+var aX=document.getElementById('x');
+var aBt1=document.getElementById('but1');
+var aTex1=document.getElementById('text1');
+var aBt2=document.getElementById('but2');
+var aTex2=document.getElementById('text2');
+var aBt3=document.getElementById('but3');
+var aTex3=document.getElementById('text3');
+var fJs=document.getElementById('out');
+var aP1=document.getElementById('p1');
+var aBt4=document.getElementById('but4');
+var aBt5=document.getElementById('but5');
+var kim=aP.innerHTML;  //在读到这句话时，KIM值更新，为最原始状态的段落。
+var onoff=true;
+
+
+
+aLi1[0].onclick=function(){
+		aP.innerHTML=kim;
+for(var i=0;i<aLi1.length;i++)
+{
+aLi1[i].style.background="rgb(201,268,222)"
+}
+this.style.background="yellow";
+if (onoff) {
+this.innerHTML="收缩";
+aLi1[1].style.display="block";
+aLi1[2].style.display="block";
+onoff=false;
+}
+else{
+this.innerHTML="展开";
+aLi1[1].style.display="none";
+aLi1[2].style.display="none";
+this.style.background="rgb(201,268,222)";
+aDiv.style.display="none";
+onoff=true;
+}
+}
+aLi1[1].onclick=function(){
+	aP.innerHTML=kim;    //使下一个点击事件发生的时候，更新上一次事件完成时的段落状态，以便继续编辑。
+for(var i=0;i<aLi1.length;i++)
+{
+aLi1[i].style.background="rgb(201,268,222)"
+}
+li2.style.background="rgb(201,268,222)";
+li1.style.background="rgb(251,266,288)";
+this.style.background="yellow";
+aDiv.style.display="block";
+aDiv1.style.display="block";
+aDiv2.style.display="none";
+}
+aLi1[2].onclick=function(){
+	aP.innerHTML=kim;
+for(var i=0;i<aLi1.length;i++)
+{
+aLi1[i].style.background="rgb(201,268,222)"
+}
+li1.style.background="rgb(201,268,222)";
+li2.style.background="rgb(251,266,288)";
+this.style.background="yellow";
+aDiv.style.display="block";
+aDiv1.style.display="none";
+aDiv2.style.display="block";
+}
+li1.onclick=function(){
+	aP.innerHTML=kim;
+li2.style.background="rgb(201,268,222)";
+li1.style.background="rgb(251,266,288)";
+aDiv1.style.display="block";
+aDiv2.style.display="none";
+for(var i=0;i<aLi1.length;i++)
+{
+aLi1[i].style.background="rgb(201,268,222)"
+}
+aLi1[1].style.background="yellow";
+
+}
+li2.onclick=function(){
+	aP.innerHTML=kim;
+li1.style.background="rgb(201,268,222)";
+li2.style.background="rgb(251,266,288)";
+aDiv2.style.display="block";
+aDiv1.style.display="none";
+for(var i=0;i<aLi1.length;i++)
+{
+aLi1[i].style.background="rgb(201,268,222)"
+}
+aLi1[2].style.background="yellow";
+
+}
+aX.onclick=function(){
+aDiv.style.display="none";
+for(var i=0;i<aLi1.length;i++)
+{
+aLi1[i].style.background="rgb(201,268,222)"
+}
+}
+
+aBt1.onclick=function(){
+	search(aTex1);
+	setTimeout(
+function(){
+	aTex1.value="";
+}
+,3000)
+
+}
+aBt2.onclick=function(){
+	search(aTex2);
+}
+aBt3.onclick=function(){
+	var str=aTex2.value;
+	var nw=aTex3.value;
+if(str!=""&&kim.indexOf(str)!=-1&&aTex3.value=="")
+{
+	fJs.style.display="block";
+	aP1.innerHTML=str;
+	aBt4.onclick=function(){
+    aP.innerHTML=kim.split(str).join("");   //只是单纯的更新了aP.innerHTMl的值，并没有更新KIM的值。
+    kim=aP.innerHTML;   //   更新KIM的值是为了：search函数中需要用到的是KIM，上面的点击函数中用来更新段落所用到的值也是KIM，只有KIM的值也跟着变了，编辑才能在下个事件发生前能得到保存。
+      fJs.style.display="none";  
+        aTex2.value=""; 
+	}
+	aBt5.onclick=function(){
+     fJs.style.display="none"; 
+     aTex2.value="";
+
+	}
+}
+else if (kim.indexOf(str)==-1) {
+   aTex2.value="";
+   aTex3.value="";
+}
+else{
+aP.innerHTML=kim.split(str).join('<span id="this">'+nw+'</span>');
+setTimeout(
+	function(){
+aP.innerHTML=kim.split(str).join(nw);
+kim=aP.innerHTML;
+ aTex2.value="";
+   aTex3.value="";
+	}
+	,3000)
+}
+
+}
+
+
+
+
+
+
+function search(obj){
+
+ var str=obj.value;
+
+if (str=="") {
+	alert(	"请输入内容！")	
+}
+else if (kim.indexOf(str)==-1) {
+	alert("并没有找到你输入的内容");
+}
+else{
+
+  aP.innerHTML=kim.split(str).join('<span id="this">'+str+'</span>')
+
+}
+
+
+}
+
+b
+</script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+<!-- 刚入学js做的一个游戏  2018/3/28 -->
+</head>
+
+<style>
+body{
+background: rgb(221,205,236);
+}
+	#cont{
+position: relative;
+width:600px;
+height: 800px; 
+margin: 30px auto;
+	}
+   h1{
+margin: 0px;
+width: 600px;
+height: 50px;
+font-size: 28px;
+line-height: 50px;
+text-align: center;
+   }
+   p{
+width: 600px;
+height: 80px;
+margin: 0px;
+padding:0px;
+line-height: 40px;
+text-align:center;
+font-size: 18px;
+font-family: "黑体";
+   }
+   #but{
+   	width: 80px;
+   	height: 40px;
+   	display: block;
+    margin: 2px auto;
+   }
+   #main{
+   	overflow: hidden;
+    position: relative;
+    margin-top: 40px;
+   	width: 596px;
+   	height: 524px;
+   	border:3px solid black;
+   }
+   #left{
+   	width: 100px;
+   	height: 60px;
+   	background:rgb(223,252,216);
+    position: absolute;
+    top: 180px;
+    left: -100px;
+    margin: 0px;
+    padding: 0px;
+   }
+   .li2{
+   	list-style: none;
+   	height: 30px;
+   	line-height: 30px;
+   	font-weight: bold;
+   	font-size: 16px;
+   	font-family: "黑体";
+   	text-indent: 8px;
+   }
+   em{
+   color: red;
+   }
+   #auto{
+   	position: relative;
+   	top: -40px;
+   	margin: 0px;
+    padding:0px;
+   	width: 600px;
+   	height: 40px;
+   }
+   #auto li{
+float: left;
+width: 60px;
+height: 50px;
+list-style: none;
+   }
+   .img1{
+   position: relative;
+   top: 0px;
+width: 50px;
+height: 40px;
+margin-left: 5px;
+   }
+
+   
+</style>
+<body>
+<div id="cont">
+	
+<h1>你的鼠标有多快</h1>
+<p>游戏说明：点击“开始游戏”，会随机掉下QQ表情，点中它。千万别让它掉下去！！！</p>
+<input id="but" type="button" value="开始游戏吧">
+
+
+
+
+<div id="main">
+<ul id="auto">
+	<li><img class="img1" src="" alt=""></li>
+	<li><img class="img1" src="" alt=""></li>
+	<li><img class="img1" src="" alt=""></li>
+	<li><img class="img1" src="" alt=""></li>
+	<li><img class="img1" src="" alt=""></li>
+	<li><img class="img1" src="" alt=""></li>
+	<li><img class="img1" src="" alt=""></li>
+	<li><img class="img1" src="" alt=""></li>
+	<li><img class="img1" src="" alt=""></li>
+	<li><img class="img1" src="" alt=""></li>
+	
+</ul>	
+
+
+
+
+
+</div>
+
+<ul id="left">
+	<li class="li2">得分：<em>0</em> 分</li>
+	<li class="li2">失分：<em>0</em> 分</li>
+</ul>
+</div>	
+
+
+</body>
+
+<script>
+var oBut=document.getElementsByTagName('input')[0];
+var oUl=document.getElementById("auto");
+
+var aLi=oUl.getElementsByTagName('li');
+
+var aImg=oUl.getElementsByTagName('img');
+
+var oDiv=document.getElementById("main");
+
+var oUl1=document.getElementById("left");
+
+var aEm=oUl1.getElementsByTagName('em');
+
+var arr1=[];
+
+var on=false;
+
+var onoff=true;
+
+var sz=2;
+
+
+
+
+for(var i=0;i<10;i++)
+{
+	arr1.push( Math.round( Math.random()*10));
+}
+
+
+for(var i=0;i<arr1.length;i++)
+{
+for(var j=i+1;j<arr1.length;j++)
+{
+	if (arr1[i]==arr1[j]) {
+arr1.splice(j,1);
+arr1.push( Math.round( Math.random()*10))
+i=0;
+j=1;
+}
+}
+}
+
+
+for(var i=0;i< aImg.length ; i++)
+{
+aImg[i].src="./images/qq"+arr1[i]+".png";
+
+}
+
+
+oBut.onclick=function(){
+
+if (onoff) {
+onoff=false;
+fn();
+oBut.value="游戏开始啦";
+
+}
+}
+
+
+
+
+function fn(){
+ var open=true;
+ var num1=Math.round( Math.random()*10);
+aImg[num1].onclick=function(){
+	if (open) {
+		open=false;
+  aImg[num1].src="./images/qq.png";
+	on=true;
+	aEm[0].innerHTML=1+Number(aEm[0].innerHTML);
+shake(aImg[num1],"left",0,function(){
+	on=false;
+	aImg[num1].style.top="0px";
+	var kim=Math.round( Math.random()*10);
+    aImg[num1].src="./images/qq"+kim+".png";
+	sz+=2;
+	fn();
+
+})
+}
+}
+
+doMove(aImg[num1],"top",sz,562,function(){
+	open=false;
+aEm[1].innerHTML=1+Number(aEm[1].innerHTML);
+if (aEm[1].innerHTML==10) {
+alert("游戏结束咯");
+aImg[num1].style.top="0px";
+oBut.value="开始游戏吧";
+onoff=true;
+aEm[0].innerHTML=0;
+aEm[1].innerHTML=0;
+sz=2;
+}
+else{
+shake(oDiv,'left',0,function(){
+aImg[num1].style.top="0px";
+	fn();
+});
+}
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+function doMove( obj, attr, dir, target, endFn ){
+	//console.log( parseInt( getStyle( obj, attr ) ) );
+	dir = parseInt( getStyle( obj, attr ) ) < target ? dir : -dir; ///当目标是800，自己位子<800，就是正，，
+
+	clearInterval( obj.simerM );
+	obj.simerM = setInterval( function(){
+		var speed = parseInt( getStyle( obj, attr ) ) + dir;  ///  当前的left属性值 + 每步数字 
+		if( speed > target && dir > 0 || speed < target && dir < 0 ){    
+			speed = target; 
+		}
+		obj.style[attr] = speed + 'px';  
+		if( speed == target ){
+			clearInterval( obj.simerM );
+			endFn && endFn();
+		}
+		if (on) {
+			clearInterval( obj.simerM );
+		}
+	},50 );
+}
+
+
+
+
+function shake(obj,attr,kim,endfn){
+var so=kim;
+var arr=[];
+var num=0;
+
+
+
+for(var i=16; i>0 ;i-=2)
+{
+ arr.push(i,-i);
+
+}
+arr.push(0);
+obj.timer=setInterval(function(){
+obj.style[attr]=arr[num]+so+"px";
+num++;
+if (num==arr.length) {
+clearInterval(obj.timer);
+endfn&&endfn();
+}
+
+},100)
+
+}
+
+
+function getStyle( obj, attr ){   //  obj对应对象$('box')   attr属性 对应字符串'width'
+	return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle( obj )[attr];
+};
+</script>
+</html>
+

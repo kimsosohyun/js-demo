@@ -1,0 +1,299 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<!-- 初学js以来遇到的最难的项目，记得以前构思了3到4天才实现的功能  2018/3/12 -->
+<style>
+#imp{
+height: 170px;
+position: relative;
+top: 100px;
+
+}
+.clear{
+clear: both;
+}
+#cont{
+position: relative; 
+height: 170px;
+padding: 0px;
+margin: 0px;
+} 
+ li{
+list-style: none;
+position: relative;
+float: left;
+margin-right: 10px;
+}
+img{
+	width: 120px;
+	height: 170px;
+	position: relative;	
+}
+
+#active{
+	display:none;
+	position: relative;
+    height: 170px;
+	padding: 0px;
+	margin: 0px;	
+}
+</style>
+<script>
+
+window.onload = function () {  
+	var aUl=document.getElementsByTagName('ul');
+	var aLi1=aUl[0].getElementsByTagName('li');
+	var oUl1=document.getElementById("cont");
+	var oUl2=document.getElementById("active");
+	var aimg1=oUl1.getElementsByTagName('img');
+	var aLi2=oUl2.getElementsByTagName('li');
+	var aimg2=oUl2.getElementsByTagName('img');
+	var so="";
+    var myTime = new Date();
+	var iHours= myTime.getHours();
+	var iMin = myTime.getMinutes();	
+	var iSec = myTime.getSeconds()			
+	var str = toTwo(iHours)+"j"+toTwo(iMin)+"j"+toTwo(iSec);
+		for ( var i=0; i<str.length; i++ ) {
+			aimg1[i].src = 'img/' + str.charAt(i) + '.JPG';
+		}
+
+ fn();
+setInterval( function(){
+aimg1[2].src="img/s.JPG";
+aimg1[5].src="img/s.JPG";
+all(aimg1[7],aimg2[7]);
+if(aimg1[7].onoff)
+{
+all(aimg1[6],aimg2[6]);
+}
+if(aimg1[6].onoff)
+{
+	all(aimg1[4],aimg2[4]);
+}
+if(aimg1[4].onoff)
+{
+	all(aimg1[3],aimg2[3]);
+}
+if(aimg1[3].onoff)
+{
+    all(aimg1[1],aimg2[1]);
+}
+if (aimg1[1].onoff) {
+	all(aimg1[0],aimg2[0]);
+}
+
+	}, 1000 );
+
+
+	function fn (){
+		var Time=new Date();
+        var Hours= Time.getHours();
+		var Min = Time.getMinutes();	
+		var Sec = Time.getSeconds();			
+		so = toTwo(Hours)+toTwo(Min)+toTwo(Sec);
+	    first();
+		var imiao1 = so.charAt(5);
+		var imiao2 = Number(so.charAt(5))+1;
+aimg1[aLi1.length-1].src= 'img/' + imiao1+ '.JPG';
+aimg2[aLi1.length-1].src= 'img/' + imiao2+ '.JPG';
+aimg1[2].src="img/j.JPG";
+aimg1[5].src="img/j.JPG";
+if (so.charAt(5)==9) {
+	aimg1[7].onoff=true;
+	aimg2[7].src= 'img/0.JPG';
+setTimeout(function(){
+	aimg1[6].src='img/' +so.charAt(4)+ '.JPG';
+},1000)	
+}
+else{
+	aimg1[7].onoff=false;
+}
+
+
+if (so.charAt(4)==5&&so.charAt(5)==9) {
+	aimg1[6].onoff=true;
+
+setTimeout(function(){
+	aimg1[4].src='img/' +so.charAt(3)+ '.JPG';
+},1000)	
+}
+else{
+	aimg1[6].onoff=false;
+}
+
+if (so.charAt(4)==5&&so.charAt(5)==9&&so.charAt(3)==9) {
+	aimg1[4].onoff=true;
+
+setTimeout(function(){
+	aimg1[3].src='img/' +so.charAt(2)+ '.JPG';
+},1000)	
+}
+else{
+	aimg1[4].onoff=false;
+}
+
+if (so.charAt(4)==5&&so.charAt(5)==9&&so.charAt(3)==9&&so.charAt(2)==5) {
+	aimg1[3].onoff=true;
+
+setTimeout(function(){
+	aimg1[1].src='img/' +so.charAt(1)+ '.JPG';
+},1000)	
+}
+else{
+	aimg1[3].onoff=false;
+}
+
+if (so.charAt(4)==5&&so.charAt(5)==9&&so.charAt(3)==9&&so.charAt(2)==5&&so.charAt(1)==9) {
+	aimg1[1].onoff=true;
+
+setTimeout(function(){
+	aimg1[0].src='img/' +so.charAt(0)+ '.JPG';
+},1000)	
+}
+else{
+	aimg1[1].onoff=false;
+}
+}
+
+
+function first(){
+
+if(so.charAt(0)==2)
+{
+	aimg2[0].src='img/0.JPG';
+}
+else{
+var hyun=Number(so.charAt(0))+1;
+aimg2[0].src='img/' + hyun + '.JPG';
+}
+
+if (so.charAt(1)==9) {
+	aimg2[1].src="img/0.jpg";
+}
+else{
+	var hyun1=Number(so.charAt(1))+1;
+aimg2[1].src='img/' + hyun1 + '.JPG';
+}
+
+
+if(so.charAt(2)==5)
+{
+aimg2[3].src="img/0.jpg";
+
+}
+else{
+	var hyun1=Number(so.charAt(2))+1;
+aimg2[3].src='img/' + hyun1 + '.JPG';
+}
+
+
+if (so.charAt(3)==9) {
+	aimg2[4].src="img/0.jpg";
+}
+else{
+	var hyun2=Number(so.charAt(3))+1;
+aimg2[4].src='img/' + hyun2 + '.JPG';
+}
+
+if(so.charAt(4)==5)
+{
+aimg2[6].src="img/0.jpg";
+}
+else{
+	var hyun3=Number(so.charAt(4))+1;
+aimg2[6].src='img/' + hyun3 + '.JPG';
+}
+}
+
+function all (obj1,obj2) {
+
+		doMove(obj1,"bottom",20,170,function(){
+fn();
+	obj1.style.bottom="0px"});
+
+
+doMove(obj2,"bottom",20,170,function(){
+fn();
+	obj2.style.bottom="0px"});
+}
+
+
+function toTwo ( n ) {
+	return n < 10 ?  '0' + n : '' + n;
+}
+function doMove( obj, attr, dir, target, endFn ){
+	//console.log( parseInt( getStyle( obj, attr ) ) );
+	dir = parseInt( getStyle( obj, attr ) ) < target ? dir : -dir; ///当目标是800，自己位子<800，就是正，，
+
+	clearInterval( obj.simerM );
+	obj.simerM = setInterval( function(){
+		var speed = parseInt( getStyle( obj, attr ) ) + dir;  ///  当前的left属性值 + 每步数字 
+		if( speed > target && dir > 0 || speed < target && dir < 0 ){    
+			speed = target; 
+		}
+		obj.style[attr] = speed + 'px';  
+		if( speed == target ){
+			clearInterval( obj.simerM );
+			endFn && endFn();
+		}
+	},50 );
+}
+function getStyle( obj, attr ){   //  obj对应对象$('box')   attr属性 对应字符串'width'
+	return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle( obj )[attr];
+};
+}
+
+</script>
+</head>
+<body>
+<div id="imp">
+<ul id="cont">
+	
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+</ul>
+<div class="clear"></div>
+<ul id="active">
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+	<li><img src="img/0.jpg" alt=""></li>
+
+</ul>
+</div>
+
+
+</body>
+</html>
+
+
+

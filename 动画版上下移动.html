@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+#show{
+	position: relative;
+	padding: 0px;
+	margin:0px;
+	width: 600px;
+	height: 300px;
+	background: pink;
+
+}
+.li{
+	transition:  1s;
+	position: absolute;
+	top: 0px;
+	list-style: none;
+	background: rgb(211,236,210);
+	width: 600px;
+	height: 50px;
+}
+.font1{
+	font-size: 20px;
+	letter-spacing: 3px;
+	line-height: 50px;
+	font-weight: bold;
+	font-family: "黑体";
+}
+.font2{
+	font-size: 20px;
+	position: absolute;
+	right: 210px;
+	line-height: 50px;
+    
+}
+.btn1,.btn2{
+    width: 60px;
+    height: 30px;
+    font-size: 14px;
+    position: absolute;
+    background: rgb(231,241,251);
+    border-radius: 5px;
+}
+.btn1{
+	right: 130px;
+	top: 10px;
+}
+.btn2{
+	right: 60px;
+	top: 10px;
+}
+#active{
+	top:240px;
+}
+
+
+	</style>
+</head>
+<body>
+		<ul id="show">
+			<li class="li">
+				<span class="font1">英雄本色2018</span>
+				<em class="font2">1</em>
+				<input class="btn1" type="button" value="上移">
+				<input class="btn2" type="button" value="下移">
+			</li>
+
+			<li class="li">
+				<span class="font1">狼少年</span>
+				<em class="font2">2</em>
+				<input class="btn1" type="button" value="上移">
+				<input class="btn2" type="button" value="下移">
+			</li>
+            
+
+           <li class="li">
+				<span class="font1">广播罗曼史</span>
+				<em class="font2">3</em>
+				<input class="btn1" type="button" value="上移">
+				<input class="btn2" type="button" value="下移">
+			</li>
+
+			<li class="li">
+				<span class="font1">就这样吧</span>
+				<em class="font2">4</em>
+				<input class="btn1" type="button" value="上移">
+				<input class="btn2" type="button" value="下移">
+			</li>
+
+			<li class="li">
+				<span class="font1">OHoh为什么</span>
+				<em class="font2">5</em>
+				<input class="btn1" type="button" value="上移">
+				<input class="btn2" type="button" value="下移">
+			</li>
+
+		</ul>
+	
+</body>
+
+<script>
+	var ul=document.getElementById('show');
+	var abtn1=document.getElementsByClassName('btn1');
+	var abtn2=document.getElementsByClassName('btn2');	
+    var  onoff=true;
+    var num=0;
+    var lis=ul.children;
+    var onoff=true;
+
+   
+   for(var i=0;i<abtn1.length;i++)
+   {  
+      lis[i].style.top=i*60+"px";
+      lis[i].index=i;
+
+
+      //var far=lis[lis.length-1].offsetTop;
+ 
+       //alert(far);  显示为0；我猜测原因可能是lis[i].style.top=i*60+"px";这句话正在进行，此时应该处于最底部的Li还处于和其他LI的重叠状态。
+       	   
+       abtn1[i].onclick=function(){
+        
+       	   
+       	 // alert(lis[lis.length-1].offsetTop);
+       	 //显示正常为240。注意：错误观点：所有漂浮元素的offsetTop都为0.
+       	 //所以下面的这句判断依然可以运行!
+          
+           
+          if (this.parentNode.offsetTop==0) { 
+          	   
+          	//	ul.appendChild(lis[0]);
+           this.parentNode.style.top=60*(lis.length-1)+"px";
+           for(var s=0;s<lis.length;s++)
+           {
+           	if (s!=this.parentNode.index) { lis[s].style.top=parseInt(lis[s].style.top)-60+"px";
+           	}
+                    
+           }	          
+         // lis[0].style.width="0px";
+          //lis[0].style.height="0px";
+          //setTimeout(function(){
+          // lis[0].style.width="600px";
+         // lis[0].style.height="50px";
+          //},3000)  试验图片变大变小问题。
+        
+          }
+          else{
+         // if (onoff) {
+          //	onoff=false;
+
+          var kim=this.parentNode.offsetTop-60;
+
+          this.parentNode.style.top=parseInt(this.parentNode.style.top)-60+"px";
+         
+            for(var s=0;s<lis.length;s++)
+           {
+           	if (lis[s].offsetTop==kim) { 
+           		lis[s].style.top=parseInt(lis[s].style.top)+60+"px";
+           	}
+            
+         }
+           // this.parentNode.previousElementSibling.style.top=parseInt( this.parentNode.previousElementSibling.style.top)+60+"px";
+           //上述方法根本不行，原因是this的上一个节点和下一个节点都是确定的，而这里只是改变了他们的定位（位置），没有改变他们排序，只能通过判断占领此位置的元素是谁，然后再改变它，突兀的使用next previous是不行的                                          
+            }
+            }
+          
+	           // }
+
+	         //   else
+	      //      {
+         //         onoff=true;
+         //   this.parentNode.style.top=parseInt(this.parentNode.style.top)-60+"px";
+       //     this.parentNode.nextElementSibling.style.top=parseInt( this.parentNode.nextElementSibling.style.top)+60+"px";
+
+	         //   }
+                
+       
+       abtn2[i].onclick=function(){
+       	     if (this.parentNode.offsetTop==60*(lis.length-1)) { 
+           this.parentNode.style.top="0px";
+           for(var s=0;s<lis.length;s++)
+           {
+           	if (s!=this.parentNode.index) { lis[s].style.top=parseInt(lis[s].style.top)+60+"px";
+           	}
+                    
+           }       
+          }
+
+         else{   
+          var tim=this.parentNode.offsetTop+60;
+
+          this.parentNode.style.top=parseInt(this.parentNode.style.top)+60+"px";
+         
+            for(var s=0;s<lis.length;s++)
+           {
+           	if (lis[s].offsetTop==tim) { 
+           		lis[s].style.top=parseInt(lis[s].style.top)-60+"px";
+           	}
+            
+         }
+            }
+
+            }
+
+   }
+
+</script>
+</html>
+
+
+

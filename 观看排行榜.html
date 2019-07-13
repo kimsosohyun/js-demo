@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<!-- 2018/1/23 -->
+	<style>
+#cont{
+	width: 500px;
+	height: 500px;
+	border:5px solid black;
+}
+.clear{
+	clear: both;
+}
+h1{
+	float: left;
+}		
+h2{
+	float: right;
+	margin: 50px 15px 0px 0px;
+	color: #ddd;
+}
+li{
+	list-style: none;
+	width: 400px;
+	height: 30px;
+	border: 3px solid #ddd;
+	margin-top: 20px;
+	position: relative;
+}
+.p1{
+	position: absolute;
+	top: -12px;
+	left:20px;
+}
+.active{
+  position: absolute;
+  top: 20px;
+  left: 130px;
+}
+.img{
+width: 90px;
+height: 90px;
+position:absolute; 
+top: 5px;
+left: 10px;
+display: none;
+}
+.but1{
+	position: absolute;
+	top: 70px;
+	right: 10px;
+	display: none;
+}
+
+	</style>
+</head>
+<body>
+<div id="cont">
+<h1>观看排行榜</h1>
+<h2>每日</h2>
+<h2>每周</h2>
+<h2>全部</h2>
+<div class="clear"></div>
+<ul id="ul1">
+	<li>
+		<input class='but1' type='button' value='播放'/>
+		<p class="p1"></p>
+		<img class='img' src=''  alt=''>	
+	</li>
+	<li>
+		<input class='but1' type='button' value='播放'/>
+		<p class="p1"></p>
+		<img class='img' src=''  alt=''>	
+	</li>
+	<li>
+		<input class='but1' type='button' value='播放'/>
+		<p class="p1"></p>
+		<img class='img' src=''  alt=''>	
+	</li>
+	<li>
+		<input class='but1' type='button' value='播放'/>
+		<p class="p1"></p>
+		<img class='img' src=''  alt=''>	
+	</li>
+	<li>
+		<input class='but1' type='button' value='播放'/>
+		<p class="p1"></p>
+		<img class='img' src=''  alt=''>	
+	</li>
+</ul>
+</div>
+</body>
+
+<script>
+window.onload=function(){
+	
+var oUl=document.getElementById('ul1');
+var aLi=oUl.getElementsByTagName('li');
+var ap=oUl.getElementsByTagName('p');
+var aBut=oUl.getElementsByTagName('input');
+var aimg=oUl.getElementsByTagName('img');
+var oh2=document.getElementsByTagName('h2');
+
+
+oh2[0].onclick=function(){
+	for(var j=0;j<oh2.length;j++){
+		oh2[j].style.color="#ddd";
+	}
+	this.style.color="black";
+fn1(['结果：我这一次'],["./images/1.jpg","./images//2.jpg","./images/3.jpg","./images/4.jpg","./images/5.jpg"]);
+}
+oh2[2].onclick=function(){
+	for(var j=0;j<oh2.length;j++){
+		oh2[j].style.color="#ddd";
+	}
+	this.style.color="black";
+fn1(["提问：偏离了航道"],["./images/11.jpg","./images/12.jpg","./images/13.jpg","./images/14.jpg","./images/15.jpg"]);
+}
+
+
+
+
+oh2[1].onclick=function(){
+	for(var j=0;j<oh2.length;j++){
+		oh2[j].style.color="#ddd";
+	}
+	this.style.color="black";
+fn1(['是什么呢：安静等待轨迹的放逐'],["./images/6.jpg","./images/7.jpg","./images/8.jpg","./images/9.jpg","./images/10.jpg"]);
+}
+
+
+
+
+
+function fn1(arrtext,arrimg){
+
+for(var i=0;i<aLi.length;i++){
+	aLi[i].index=i;
+	ap[i].innerHTML=arrtext;
+aLi[i].onmouseover=function(){
+	this.style.height="100px";
+	this.style.border="3px solid black";
+	aimg[this.index].style.display="block";
+	aimg[this.index].src=arrimg[this.index];
+	aBut[this.index].style.display='block';
+     ap[this.index].className="active";
+}
+
+
+aLi[i].onmouseout=function(){
+
+	this.style.height="30px";
+	this.style.border="3px solid #ddd";
+	ap[this.index].className='p1';
+	aimg[this.index].style.display="none";
+	aBut[this.index].style.display='none';
+}
+}
+}
+
+
+
+}
+
+
+</script>
+
+</html>
+

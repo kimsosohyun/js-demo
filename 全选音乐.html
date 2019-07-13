@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<!-- 表单单个checkbox和全选checkbox的关联   2018/1/30-->
+<style>
+	li{ 
+	    margin: 0px;
+		padding: 0px;
+		width: 560px;
+		height:50px;
+		background: rgb(223,235,261);
+		list-style: none;
+		margin-bottom: 20px;
+		position: relative;
+	}
+	em{
+		line-height: 50px;
+		margin-left: 80px;
+	}
+	span{
+        line-height: 50px;
+        position: absolute;
+        right: 20px;
+	}
+	#box{
+		margin-left: 42px;
+		width: 18px;
+		height: 18px;
+	}
+	strong{
+		margin-left: 10px;
+		font-size: 18px;
+	}
+
+
+
+</style>
+
+
+</head>
+<body>
+	<ul>
+		<li>
+		<input class="inp" type="checkbox"/>
+		<em>只有我不行的恋爱</em>
+		<span>脸红的思春期</span>
+		</li>
+
+		<li>
+		<input class="inp" type="checkbox"/>
+		<em>给你宇宙</em>
+		<span>脸红的思春期</span>
+		</li>
+
+		<li>
+		<input class="inp" type="checkbox"/>
+		<em>争吵的日子</em>
+		<span>脸红的思春期</span>
+		</li>
+
+		<li>
+		<input class="inp" type="checkbox"/>
+		<em>radioromance</em>
+		<span>kimsosohyun</span>
+		</li>
+
+		<li>
+		<input class="inp" type="checkbox"/>
+		<em>想你</em>
+		<span>金所炫</span>
+		</li>
+
+		<li>
+		<input class="inp" type="checkbox"/>
+		<em>哈利路亚</em>
+		<span>智珉</span>
+		</li>
+		
+	</ul>
+	<input id="box" type="checkbox" />
+	<strong>全选</strong>
+
+</body>
+
+
+<script>
+var oUl=document.getElementsByTagName('ul')[0];	
+var aLi=document.getElementsByTagName('li');
+var aInp=oUl.getElementsByTagName('input');
+var oBox=document.getElementById('box');
+var num=0;
+
+oBox.checked=false;
+for(var i=0;i<aInp.length;i++)
+{
+aInp[i].checked=false;
+aLi[i].onoff=true;
+aInp[i].index=i;
+aInp[i].onclick=function(){
+ if(this.checked){
+ 	aLi[this.index].style.background="rgb(221,251,232)";
+ 	aLi[this.index].onoff=false;
+ 	num++
+ }
+ else{
+	aLi[this.index].style.background="rgb(223,235,261)";
+	aLi[this.index].onoff=true;
+	num--
+	}
+if(num==aLi.length){
+ oBox.checked=true;
+}
+else{
+	oBox.checked=false;
+}
+}
+}
+
+
+
+
+
+oBox.onclick=function(){
+
+if(oBox.checked)
+{   num=6;
+	for(var i=0;i<aInp.length;i++)
+	{
+		aInp[i].checked=true;
+		aLi[i].style.background="rgb(221,251,232)";
+		aLi[i].onoff=false;
+	}
+
+}
+else{
+for(var i=0;i<aInp.length;i++)
+	{
+		aInp[i].checked=false;
+		aLi[i].style.background="rgb(223,235,261)"
+
+	}
+}
+}
+
+
+
+for(var i=0;i<aLi.length;i++){
+aLi[i].onmouseover=function(){
+		this.style.background="rgb(221,251,232)";
+	}
+	aLi[i].onmouseout=function(){
+		if(this.onoff){
+	this.style.background="rgb(223,235,261)";
+}
+}
+}
+
+
+</script>
+</html>
+
+
+

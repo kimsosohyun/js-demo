@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<style>
+#box{
+	 width: 600px;
+	 height: 400px;
+	 background: rgb(201,235,235);
+	 border:2px solid black;
+	 position: relative;
+}	
+
+#top{
+	margin:0px;
+	margin-top: 20px;
+	padding: 4px;
+	line-height: 32px;
+
+}
+#bottom{
+	margin: 0px;
+	margin-top: 32px;
+	padding: 2px;
+	font-size: 18px;
+	letter-spacing: 2px;
+	line-height: 26px;
+	
+}	
+.active{
+
+max-width: 180px;
+max-height: 190px;
+ border:2px solid black;
+ background: rgb(210,205,265);
+ position: absolute;
+
+
+
+}
+
+
+	</style>
+</head>
+<body>
+	<div id="box">
+<h3 id="top">台风（英语：Typhoon）是<a href="javascript:;">赤道</a>以北，日界线以西，亚洲<a href="javascript:;">太平洋</a>国家或地区对热带气旋的一个分级。</h3>
+
+<p id="bottom">
+	
+在<a href="javascript:;">台湾</a>、日本等地，将中心持续风速每秒17.2米或以上的<a href="javascript:;">热带气旋</a>（包括世界气象组织定义中的热带风暴、强热带风暴和台风）均称台风。在非正式场合，“台风”甚至直接泛指热带气旋本身。当西北太平洋的热带气旋达到<a href="javascript:;">热带风暴</a>的强度，区域专责气象中心（RSMC）日本气象厅会对其编号及命名，名称由世界气象组织台风委员会的14个国家和地区提供。科学家曾估算，一个中等强度的台风所释放的能量相当于上百个氢弹、或10亿吨<a href="javascript:;">黄色炸药</a>所释放能量的总和。
+
+
+</p>		
+
+</div>
+</body>
+
+<script>
+var box=document.getElementById('box')	;
+var a=document.getElementsByTagName('a');
+var text=["赤道是地球表面的点随地球自转产生的轨迹中周长最长的圆周线。赤道半径6,378.2km，赤道周长40075.02千米（24,901英里）。详情","位于亚洲、大洋洲、南极洲和南北美洲之间。南北最长约15900千米，东西最宽约19000千米，总面积16526万平方千米．平均深度3957米，最大深度11034米。详情","台湾是中国不可分割的一部分。位于中国大陆东南沿海的大陆架上，总面积约3.6万平方千米，包括台湾岛及兰屿、绿岛、钓鱼岛等21个附属岛屿和澎湖列岛64个岛屿。详情","热带气旋是发生在热带、亚热带地区海面上的气旋性环流，是地球物理环境中最具破坏性的天气系统之一。详情","热带风暴（Tropical storm）是热带气旋的一种，其中心附近持续风力为每小时63-87公里，即烈风程度的风力。是所有自然灾害中最具破坏力的。详情",'三硝基甲苯（TNT）为白色或苋色淡黄色针状结晶，无臭，有吸湿性。主要危害是慢性中毒。局部皮肤刺激产生皮炎和黄染。慢性作用主要表现为中毒性胃炎、中毒性肝炎、再障、贫血、中毒性白内障详情']
+
+var wih=box.getBoundingClientRect().width/2;
+var het=box.getBoundingClientRect().height/2;
+
+
+
+for(var i=0;i<a.length;i++)
+{ 
+a[i].index=i;
+
+a[i].onmouseover=function(){
+var iw=this.offsetWidth+this.offsetLeft;
+var ih=this.offsetHeight+this.offsetTop;
+//var iw=this.offsetLeft;
+//var ih=this.offsetTop;
+
+
+var div=document.createElement("div");
+div.className="active";
+
+if (iw<wih) {
+
+div.style.left=this.offsetLeft+"px";
+
+
+}
+else{
+	div.style.right=2*wih-iw+"px";
+
+}
+
+if (ih<het) {
+div.style.top=ih+"px";
+}
+else{
+div.style.bottom=2*het-this.offsetTop+"px";
+}
+
+
+
+
+div.innerHTML=text[this.index];
+//console.log(iw,ih);
+box.appendChild(div);
+}
+a[i].onmouseout=function(){
+	box.removeChild(box.lastElementChild);
+}
+
+}
+</script>
+</html>
